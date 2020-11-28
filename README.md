@@ -23,8 +23,7 @@ docker-compose up -d
 Example: creating client with name "mylaptop" which has the password
 "mylaptoppassword".
 ```shell
-docker container exec -ti idOfYourContainerHere create-client.sh mylaptop
-mylaptoppassword
+docker container exec -ti idOfYourContainerHere create-client.sh mylaptop mylaptoppassword
 ```
 - revoke a client certificate.\
 This should be done if you think someone else did get his hands on your
