@@ -1,0 +1,15 @@
+# You might want to delete this env file if you want to share this project
+# after creation of the server or at least adapt these values before you do so.
+# Set passwords used for encryption of pkey and cert of: ca and server
+EASYRSA_CA_PASS=j912j3h1ui3h12ui3h279dh27h1301g27381h3812?
+EASYRSA_SERVER_PASS=meiwqne891n9en271he8217en128e1ne7812?
+# declare port where the host machine will be listening/allowing input.
+OPENVPN_SERVER_PORT=41194
+OPENVPN_PROTOCOL_TYPE=udp
+# following options can be left default
+EASYRSA_DIGEST=sha512
+EASYRSA_CA_COMMON_NAME=ca
+EASYRSA_SERVER_COMMON_NAME=server
+# allows us to keep the certificate revocation list for 10 years
+EASYRSA_CRL_DAYS=3650
+# EASYRSA_REQ_COUNTRY=DE

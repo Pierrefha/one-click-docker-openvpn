@@ -1,0 +1,45 @@
+# dockerfile version 3.8 -> 18.07.2020
+version: "3.8"
+services:
+    # This container will host the vpn server.
+    # It will offer an additional layer of security by tunelling and
+    # encrypting our traffic.
+    # This might also be expanded by adding several private services here in
+    # this compose, or to the vpnnet. The ones you only want to have accessable
+    # via the vpn. (e.g. nextcloud, gitlab, etc..)
+    openvpn-server:
+        env_file:
+            - .env
+            - openvpn-env
+        # deploy:
+        #     replicas: 1
+        image: ${COMPOSE_PROJECT_NAME}-vpn-server
+        build:
+            context: .
+            dockerfile: openvpn-dockerfile
+            args:
+                UBUNTU_VERSION: ${UBUNTU_VERSION}
+        ports:
+            # MAYBE: in future bind to localhost and use nginx reverse proxy
+            # for openvpn as well.
+            - "${OPENVPN_SERVER_PORT}:1194/${OPENVPN_PROTOCOL_TYPE}"
+        # (middle) MAYBE Think what can happen if this container is
+        # compromised.
+        # Need to allow tun(tunnel) devices to create and adapt tunnels
+        devices:
+            - "/dev/net/:/dev/net/"
+        cap_add:
+            - NET_ADMIN
+        sysctls:
+            - net.ipv4.ip_forward=1
+        volumes:
+            - ${HOST_DATA_PATH}/openvpn:${OPENVPN_SERVER_DATA_PATH}
+            - ${HOST_DATA_PATH}/openvpn/server:/etc/openvpn/
+            - ${HOST_DATA_PATH}/openvpn/easyrsa:/easy-rsa/easyrsa3/
+        networks:
+             - vpnnet
+
+# use simple bridge network driver (does not allow swarm)
+networks:
+  vpnnet:
+      driver: bridge

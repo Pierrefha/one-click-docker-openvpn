@@ -1,0 +1,17 @@
+ARG UBUNTU_VERSION
+FROM ubuntu:$UBUNTU_VERSION
+
+LABEL maintainer="Pierre Dahmani <noownemailyet:((>"
+
+ADD ./basics /setup/basics/
+ADD ./scripts /setup/scripts/
+
+# install stuff. always use apt-get for docker
+RUN apt-get update && apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq openvpn vim \
+    tzdata net-tools easy-rsa ed curl inetutils-ping iptables git && \
+    chmod -R +x /setup/scripts/
+    # (low)MAYBE find out how to remove apt cache.
+
+# entrypoint of container
+CMD ["sh", "-c", "/setup/scripts/setup.sh"]

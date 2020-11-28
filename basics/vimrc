@@ -1,0 +1,112 @@
+" VIMRC CONFIG
+" Free to share, use, learn and work with!
+" www.github.com:Pierrefha/dot-rc-files
+
+" map -> recursively go through mappings
+" nnoremap -> map only this one line and only in normal mode
+
+" use vImproved (basicly use vim instead of vi)
+set nocompatible
+
+" Pick a leader key
+let mapleader = "<"
+
+" Display filename at the top of the window
+set title
+
+" Shows line numbers
+set number
+" displays line numbers relativ to current curser location
+set relativenumber
+" always ignore cases when searching
+set ignorecase
+" don't ignore cases when using uppercase searches
+set smartcase
+
+" THIS DOES REQUIRE vim-gnome to be installed. It will link syskeyboard to +
+" register. (just apt install vim-gnome and thats it(18.04LTS)
+" p -> paste after current character; P -> paste before current
+" character(mostly the usecase!
+nnoremap <C-v> "+P
+" copy to BOTH primary selection (*) and system clip(+) to ensure
+" compatibility
+" TODO: figure out how this works? it does copy to y and to + register i
+" think. vnoremap <C-c> "+y is the alternative..
+vnoremap <C-c> "*y :let @+=@*<CR>
+
+" make tab print 4 spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
+" automaticly refactor after 78 chars (will become 80 with cr || crlf)
+set textwidth=78
+" options for automated formatting :help formatoptions || :help fo-table
+" TODO why does this not work?
+set formatoptions=
+set formatoptions=t
+
+" automaticly delete trailing whitespaces from ALL files.
+" (COULD adapt *.cpp etc.. if this ever makes some trouble)
+autocmd BufWritePre * %s/\s\+$//e
+
+" when to use :nore https://vi.stackexchange.com/questions/7722/how-to-debug-a-mapping
+" change directions of std scrolling to match our intuition
+noremap <C-Y> <C-E>
+noremap <C-E> <C-Y>
+" move 5 lines at once with our move keys i and m
+noremap <C-i> 5<C-Y>
+noremap <C-m> 5<C-E>
+
+" map tag and history jumping
+nnoremap <Leader>d <C-]>
+nnoremap <Leader>b <C-O>
+nnoremap <Leader>n <C-I>
+nnoremap <Leader>h <ESC>:ju<CR>
+
+
+" set move keys in vim. not only in normal mode to enable 3dm, 5yi etc..
+noremap m <down>
+noremap i <up>
+noremap j <left>
+noremap l <right>
+
+" map k to insert
+nnoremap k <insert>
+" idk why but i need these remappings to use text objects and verbs
+nnoremap ciw ciw
+nnoremap cit cit
+nnoremap cip cip
+nnoremap diw diw
+nnoremap dit dit
+nnoremap dip dip
+nnoremap yiw yiw
+nnoremap yit yit
+nnoremap yip yip
+" cases
+nnoremap guiw guiw
+nnoremap gUiw gUiw
+nnoremap gtiw g~iw
+
+" move around in vim windows
+nnoremap <Leader>j <C-W>h
+nnoremap <Leader>l <C-W>l
+nnoremap <Leader>i <C-W>k
+nnoremap <Leader>m <C-W>j
+
+" navigate to tabs " my altgr-t maps to ŧ
+nnoremap ¹ 1<C-PageDown>
+nnoremap ² 2<C-PageDown>
+nnoremap ³ 3<C-PageDown>
+nnoremap ¼ 4<C-PageDown>
+nnoremap ½ 5<C-PageDown>
+nnoremap ¬ 6<C-PageDown>
+
+" fore quit all windows "altgr-(f_q)
+nnoremap đ@ :qa!<CR>
+" quit current window with "algr-q
+nnoremap @ <C-W>q
+" std write
+nnoremap ł :w!<CR>
+" use altgr t q to close complete current tab " my altgr tq maps to ŧ@
+nnoremap ŧ@ :tabc<CR>
+
